@@ -17,7 +17,7 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-const clock = new THREE.Clock();
+// const clock = new THREE.Clock();
 const controls = new OrbitControls(camera, renderer.domElement)
 
 dataloader.loadData(scene, 'tsne', 2000)
