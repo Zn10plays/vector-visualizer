@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 
+let mesh = {images: [], index: []}
 
 
 function addPoint(scene: THREE.Scene, pathToImage: string, vector: THREE.Vector3, imageScale: number) {
@@ -23,6 +24,14 @@ function addPoint(scene: THREE.Scene, pathToImage: string, vector: THREE.Vector3
   image.lookAt(image.position.clone().add(direction));
 
   scene.add(image)
+}
+
+function clearGraph(scene: THREE.Scene) {
+  while(scene.children.length > 0){ 
+    scene.remove(scene.children[0]); 
+  }
+
+  mesh = {images: [], index: []}
 }
 
 

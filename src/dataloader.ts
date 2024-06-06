@@ -51,7 +51,7 @@ function loadData(scene: THREE.Scene, type: 'tsne' | 'pca' = 'tsne', sampleMax: 
 function get3Vector(index: number, type: 'tsne' | 'pca' = 'tsne', scale: number=.1) {
   const desiredVector: Vectors = (type == 'pca' ? pca_map : tsne_map) as Vectors
 
-  return new THREE.Vector3(desiredVector['x'][index] * scale, desiredVector['y'][index] * scale, desiredVector['z'][index] * scale)
+  return new THREE.Vector3(desiredVector['x'][index] * scale, desiredVector['y'][index] * scale, desiredVector['z'][index] * scale * 3)
 }
 
 export default {

@@ -8,9 +8,6 @@ import dataloader from './dataloader';
 const positionDisplay = document.getElementById('positionDesc')
 const scene = new THREE.Scene();
 
-grid.makeGrid(scene, 10, 10)
-odometry.addDirectionalVectors(scene, 1, .2, .1)
-
 const camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 const renderer = new THREE.WebGLRenderer();
@@ -22,6 +19,39 @@ const controls = new OrbitControls(camera, renderer.domElement)
 
 dataloader.loadData(scene, 'tsne', 2000)
 
+const dimTypeSelect = document.getElementById('dimType');
+// Add an event listener for the 'change' event
+dimTypeSelect?.addEventListener('change', function(event: Event) {
+  const target = event.target as HTMLSelectElement;
+  const selectedValue = target.value;
+
+  while(scene.children.length > 0){ 
+    scene.remove(scene.children[0]); 
+  }
+
+  // Perform actions based on the selected value
+  switch (selectedValue) {
+    case 'pca':
+      // Perform actions for PCA
+      dataloader.loadData(scene, 'pca', 2000)
+      // Add your PCA-related logic here
+      break;
+    case 'tsne':
+      // Perform actions for t-SNE
+      dataloader.loadData(scene, 'tsne', 2000)
+      // Add your t-SNE-related logic here
+      break;
+    default:
+      // Handle any other cases if needed
+      break;
+  }
+
+  grid.makeGrid(scene, 10, 10)
+  odometry.addDirectionalVectors(scene, 1, .2, .1)
+});
+
+grid.makeGrid(scene, 10, 10)
+odometry.addDirectionalVectors(scene, 1, .2, .1)
 
 function animate() {
   // const delta = clock.getDelta();
