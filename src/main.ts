@@ -24,7 +24,7 @@ dataloader.loadData(scene, 'tsne', 2000)
 
 
 function animate() {
-  const delta = clock.getDelta();
+  // const delta = clock.getDelta();
 
   if (positionDisplay) {
     positionDisplay.innerHTML = `x: ${camera.position.x.toFixed(2)} y: ${camera.position.y.toFixed(2)} z: ${camera.position.z.toFixed(2)}`
