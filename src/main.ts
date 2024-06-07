@@ -3,6 +3,8 @@ import './style.css'
 import * as THREE from 'three';
 import grid from './util/grid';
 import odometry from './util/odometry';
+import mapper from './vectorspace/mapper'
+import targetManager from './util/target';
 import dataloader from './dataloader';
 
 const positionDisplay = document.getElementById('positionDesc')
@@ -25,9 +27,7 @@ dimTypeSelect?.addEventListener('change', function(event: Event) {
   const target = event.target as HTMLSelectElement;
   const selectedValue = target.value;
 
-  while(scene.children.length > 0){ 
-    scene.remove(scene.children[0]); 
-  }
+  mapper.clearGraph(scene);
 
   // Perform actions based on the selected value
   switch (selectedValue) {
@@ -61,6 +61,11 @@ function animate() {
   }
    
 	renderer.render( scene, camera );
+  const target = mapper.getRayTracerTarget(camera)
+
+  if (target) { 
+    targetManager.displayTarget(target)
+  }
 
   controls.update();
 }

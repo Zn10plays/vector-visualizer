@@ -32,8 +32,8 @@ function loadData(scene: THREE.Scene, type: 'tsne' | 'pca' = 'tsne', sampleMax: 
   }
 
 
-  const vectorSpaceScale = type == 'pca' ? 7 : 1
-  const imageScale = type == 'pca' ? .7 : 1
+  const vectorSpaceScale = type == 'pca' ? 7 : 10
+  const imageScale = type == 'pca' ? .7 : 2
 
   console.log(vectorSpaceScale, imageScale)
 
@@ -43,7 +43,8 @@ function loadData(scene: THREE.Scene, type: 'tsne' | 'pca' = 'tsne', sampleMax: 
       scene,
       fet['img_paths'][i].replace('dataset/', 'crunched/').replace('.jpg', '.webp'),
       get3Vector(i, type, vectorSpaceScale),
-      imageScale
+      imageScale,
+      i
     )
   }
 }
@@ -51,7 +52,7 @@ function loadData(scene: THREE.Scene, type: 'tsne' | 'pca' = 'tsne', sampleMax: 
 function get3Vector(index: number, type: 'tsne' | 'pca' = 'tsne', scale: number=.1) {
   const desiredVector: Vectors = (type == 'pca' ? pca_map : tsne_map) as Vectors
 
-  return new THREE.Vector3(desiredVector['x'][index] * scale, desiredVector['y'][index] * scale, desiredVector['z'][index] * scale * 3)
+  return new THREE.Vector3(desiredVector['x'][index] * scale, desiredVector['y'][index] * scale, desiredVector['z'][index] * scale)
 }
 
 export default {

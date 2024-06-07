@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
-let mesh = {images: [], index: []}
+let mesh: THREE.Mesh[] = []
+const raycaster = new THREE.Raycaster();
 
-
-function addPoint(scene: THREE.Scene, pathToImage: string, vector: THREE.Vector3, imageScale: number) {
+function addPoint(scene: THREE.Scene, pathToImage: string, vector: THREE.Vector3, imageScale: number, index: number) {
   const loader = new THREE.TextureLoader()
   const texture = loader.load(pathToImage)
 
@@ -12,8 +12,9 @@ function addPoint(scene: THREE.Scene, pathToImage: string, vector: THREE.Vector3
   const material = new THREE.MeshBasicMaterial( { map: texture, transparent: true, side: THREE.DoubleSide } );
   const image = new THREE.Mesh( geometry, material );
 
+  image.name = index.toString()
+
   image.position.set(vector.x, vector.y, vector.z)
-  // image.setRotationFromAxisAngle(new THREE.Vector3(0,0,0), 90)
 
   const pointToFaceAwayFrom = new THREE.Vector3(0, 0, 0);
 
@@ -24,15 +25,29 @@ function addPoint(scene: THREE.Scene, pathToImage: string, vector: THREE.Vector3
   image.lookAt(image.position.clone().add(direction));
 
   scene.add(image)
+  mesh.push(image)
 }
 
 function clearGraph(scene: THREE.Scene) {
-  while(scene.children.length > 0){ 
-    scene.remove(scene.children[0]); 
+  for (let i = 0; i < mesh.length; i++) {
+    scene.remove(mesh[i])
   }
+}
 
-  mesh = {images: [], index: []}
+function getRayTracerTarget(camera: THREE.Camera): null | THREE.Object3D<THREE.Object3DEventMap>{
+  raycaster.setFromCamera(new THREE.Vector2(), camera);
+
+  const intersects = raycaster.intersectObjects(mesh);
+
+  if (intersects.length > 0) {
+    const firstIntersection = intersects[0];
+    const firstImageMesh = firstIntersection.object;
+    return firstImageMesh
+  } else {
+    // do somth sus
+    return null;
+  }
 }
 
 
-export default {addPoint}
+export default {addPoint, clearGraph, getRayTracerTarget}

@@ -5,11 +5,24 @@ body {
   padding: 0;
   margin: 0;
   position: relative;
+  user-select: none;
 }
 
 #position {
   position: absolute;
-  color: wheat;
+  color: black;
   top:0;
   left:0;
+  max-width: 350px;
+  width: 100%;
+  background-color: bisque;
+}
+
+.image {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#novelDisplay {
+  border: black
 }
