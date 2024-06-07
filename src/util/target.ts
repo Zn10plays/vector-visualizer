@@ -36,7 +36,7 @@ function displayTarget(traget: THREE.Object3D<THREE.Object3DEventMap>) {
   traget.position.y.toFixed(2) + ", " +
   traget.position.z.toFixed(2) 
 
-  category.innerHTML = 'Name: ' + fet['category'][index]
+  category.innerHTML = 'Genre: ' + fet['category'][index]
 }
 
 export default { displayTarget }
